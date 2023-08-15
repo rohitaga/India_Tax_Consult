@@ -47,7 +47,7 @@ elif selected == "Business / Profession":
 elif selected == "Senior Citizens": # Existing condition
     st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.') 
     senior_citizens.show()
-elif selected == "Hindu Undivided Family (HUF)": # New condition
+elif selected == "Hindu Undivided Family": # New condition
     st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.') 
     huf_tax.show() # Using the imported 'show' function from 'huf_tax' module
 

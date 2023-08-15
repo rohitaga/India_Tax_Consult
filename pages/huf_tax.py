@@ -6,7 +6,7 @@ def show():
 
 def hindu_undivided_family():
     # Personal Information Section
-    st.title('Tax Analysis App for Hindu Undivided Family (HUF)')
+    st.title('Tax Analysis App for Hindu Undivided Family')
     tax_regime = st.selectbox('Choose Tax Regime', ['Old Tax Regime', 'New Tax Regime'])
 
     # Income Details Section
