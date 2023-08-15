@@ -5,7 +5,19 @@ def show():
     hindu_undivided_family()
 
 def hindu_undivided_family():
+    # Customizing the sidebar appearance
+    st.sidebar.title("Navigation")
+
+    navigation = st.sidebar.selectbox("Select an Option", ["Tax Calculator", "Learning Manual"])
+
+    if navigation == "Tax Calculator":
+        main_app()
+    elif navigation == "Learning Manual":
+        description()
+
+def main_app():
     # Personal Information Section
+    st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.')
     st.title('Tax Analysis App for Hindu Undivided Family')
     tax_regime = st.selectbox('Choose Tax Regime', ['Old Tax Regime', 'New Tax Regime'])
 
@@ -98,3 +110,26 @@ def hindu_undivided_family():
             st.error(f'Error: {str(e)}')
         except Exception as e:
             st.error('An unexpected error occurred. Please try again or contact support.')
+
+def description():
+    st.markdown("# Tax Insight App Tutorial for Hindu Undivided Family")
+    st.markdown("Welcome to the **Tax Insight Tutorial** for Hindu Undivided Families (HUF). This tutorial will guide you through using the app and understanding how your HUF's tax is calculated.")
+
+    with st.expander("Overview and Key Concepts"):
+        st.markdown("- Special tax provisions apply for Hindu Undivided Families.")
+        st.markdown("- The app considers tax rules, deductions, and other factors specific to HUF to estimate potential tax liability.")
+        st.markdown("- The calculation involves segmenting your income, applying rates to each segment, considering deductions, and incorporating Health and Education Cess.")
+
+    steps = [
+        ("Step 1: Tax Regime Selection", "Choose between the Old and New Tax Regime. Different deductions are applicable depending on the chosen regime.", "Example:\n- The Old Tax Regime allows certain deductions under Section 80C, 80D, and 80G."),
+        ("Step 2: Income Details", "Enter various sources of income like Business Income, House Property Income, Capital Gains, and Other Income.", "For instance:\n- If your Business Income is ₹500,000, it becomes part of your total income."),
+        ("Step 3: Deductions", "Deductions lower taxable income. They are applicable in the Old Tax Regime only. Deductions decrease the portion subject to taxation.", "For example:\n- If you have a Section 80C deduction of ₹150,000, it's subtracted from total income."),
+        ("Step 4: Tax Paid", "Enter taxes paid via TDS or Advance Tax. This considers taxes paid before calculating final tax liability.", "For example:\n- If you've paid ₹20,000 as TDS and ₹10,000 as Advance Tax, these are subtracted."),
+        ("Step 5: Results", "Click 'Calculate Tax' to simulate the process using your data.", "Example:\n- Based on your inputs, the app will calculate the total tax liability, including any applicable cess or surcharge.")
+    ]
+
+    for step, explanation, example in steps:
+        with st.expander(step):
+            st.write(explanation)
+            st.markdown("#### Example:")
+            st.write(example)

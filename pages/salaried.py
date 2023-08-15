@@ -1,11 +1,24 @@
 import streamlit as st
+import pandas as pd
 import matplotlib.pyplot as plt
 
 def show():
     salaried_non_resident()
 
 def salaried_non_resident():
+    # Customizing the sidebar appearance
+    st.sidebar.title("Navigation")
+
+    navigation = st.sidebar.selectbox("Select an Option", ["Tax Calculator", "Learning Manual"])
+
+    if navigation == "Tax Calculator":
+        main_app()
+    elif navigation == "Learning Manual":
+        description()
+        
+def main_app():
     # Personal Information Section
+    st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.')
     st.title('Tax Analysis App for Salaried Employees and Non-Residents')
     st.header('Personal Information')
     name = st.text_input('Full Name')
@@ -118,3 +131,26 @@ def salaried_non_resident():
             st.error(f'Error: {str(e)}')
         except Exception as e:
             st.error('An unexpected error occurred. Please try again or contact support.')
+
+def description():
+    st.markdown("# Tax Insight App Tutorial")
+    st.markdown("Welcome to the **Tax Insight Tutorial**. This tutorial will guide you through using the app and understanding how your tax is calculated. Behind the scenes, the app utilizes tax rules and the data you've provided to perform tax calculations.")
+
+    with st.expander("Overview and Key Concepts"):
+        st.markdown("- Different tax rates apply for non-residents.")
+        st.markdown("- The app considers tax rules, deductions, and other factors to estimate potential tax liability.")
+        st.markdown("- The calculation involves segmenting your income, applying rates to each segment, considering deductions, and incorporating Health and Education Cess.")
+
+    steps = [
+        ("Step 1: Personal Information", "Provide basic personal details like Full Name, Age, and Residential Status. These details are used to customize tax calculations based on age and residency rules.", "Example:\n- If you are a senior citizen, different tax slabs may apply."),
+        ("Step 2: Income Details", "Enter various sources of income. Each source contributes to your total income and affects tax calculations based on distinct rates.", "For instance:\n- If your Salary Income is ₹500,000, it becomes part of your total income.\n- Tax slabs vary by income ranges."),
+        ("Step 3: Deductions", "Deductions lower taxable income. They decrease the portion subject to taxation, providing a more accurate tax estimation.", "For example:\n- If you have a Section 80C deduction of ₹150,000, it's subtracted from total income before tax rates are applied."),
+        ("Step 4: Tax Paid", "Enter taxes paid via TDS or Advance Tax. This considers taxes paid before calculating final tax liability.", "For example:\n- If you've paid ₹20,000 as TDS and ₹10,000 as Advance Tax, these are subtracted."),
+        ("Step 5: Results", "Click 'Calculate Tax' to simulate the process using your data.", "Example:\n- Based on your inputs, the app will calculate the total tax liability, including any applicable cess or surcharge.")
+    ]
+
+    for step, explanation, example in steps:
+        with st.expander(step):
+            st.write(explanation)
+            st.markdown("#### Example:")
+            st.write(example)

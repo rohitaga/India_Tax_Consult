@@ -39,16 +39,16 @@ selected = option_menu(
 if selected == "Home":
     home.show()
 elif selected == "Salaried":
-    st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.')    
+    st.info('Note: You can switch between the Tax Calculator and Learning Manual sections using the sidebar navigation on the left.')    
     salaried.show()
 elif selected == "Business / Profession":
-    st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.') 
+    st.info('Note: You can switch between the Tax Calculator and Learning Manual sections using the sidebar navigation on the left.')    
     business_profession.show()
 elif selected == "Senior Citizens": # Existing condition
-    st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.') 
+    st.info('Note: You can switch between the Tax Calculator and Learning Manual sections using the sidebar navigation on the left.')    
     senior_citizens.show()
 elif selected == "Hindu Undivided Family": # New condition
-    st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.') 
+    st.info('Note: You can switch between the Tax Calculator and Learning Manual sections using the sidebar navigation on the left.')    
     huf_tax.show() # Using the imported 'show' function from 'huf_tax' module
 
 st.warning('Please note that this app is based on tax laws as of the 2023 fiscal year. Always consult with a tax professional to ensure compliance with the latest regulations.')

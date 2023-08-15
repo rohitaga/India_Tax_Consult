@@ -5,7 +5,19 @@ def show():
     business_profession()
 
 def business_profession():
+    # Customizing the sidebar appearance
+    st.sidebar.title("Navigation")
+
+    navigation = st.sidebar.selectbox("Select an Option", ["Tax Calculator", "Learning Manual"])
+
+    if navigation == "Tax Calculator":
+        main_app()
+    elif navigation == "Learning Manual":
+        description()
+
+def main_app():
     # Personal Information Section
+    st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.')
     st.title('Tax Analysis App for Business/Profession')
     st.header('Personal Information')
     name = st.text_input('Full Name')
@@ -128,3 +140,26 @@ def business_profession():
             st.error(f'Error: {str(e)}')
         except Exception as e:
             st.error('An unexpected error occurred. Please try again or contact support.')
+
+def description():
+    st.markdown("# Tax Insight App Tutorial for Business/Profession")
+    st.markdown("Welcome to the **Tax Insight Tutorial for Business/Profession**. This tutorial will guide you through using the app to understand how your tax is calculated, considering various factors such as business income, deductions, and tax payments.")
+
+    with st.expander("Overview and Key Concepts"):
+        st.markdown("- Applicable tax rates and rules for businesses and professionals.")
+        st.markdown("- Deductions, TDS, and advance tax payments are incorporated into the calculations.")
+        st.markdown("- The app considers different sources of income, including business income, property income, capital gains, and others.")
+
+    steps = [
+        ("Step 1: Personal Information", "Provide basic personal details like Full Name, Age, and Tax Regime selection.", "Example:\n- If you are under the New Tax Regime, different tax slabs may apply."),
+        ("Step 2: Income Details", "Enter various sources of income such as Business Income, House Property Income, Capital Gains, and Other Income.", "For instance:\n- If your Business Income is ₹500,000, it becomes part of your total income."),
+        ("Step 3: Deductions", "Deductions like Section 80C, 80D, and 80G can be entered to lower taxable income.", "For example:\n- If you have a Section 80D deduction of ₹25,000 for Health Insurance, it's subtracted from total income."),
+        ("Step 4: Tax Paid", "Enter taxes paid via TDS or Advance Tax. This considers taxes paid before calculating final tax liability.", "For example:\n- If you've paid ₹20,000 as TDS and ₹10,000 as Advance Tax, these are subtracted."),
+        ("Step 5: Results", "Click 'Calculate Tax' to simulate the tax calculation process using your data.", "Example:\n- The app will calculate the total tax liability, considering all inputs, and display a summary and breakdown of income and taxes.")
+    ]
+
+    for step, explanation, example in steps:
+        with st.expander(step):
+            st.write(explanation)
+            st.markdown("#### Example:")
+            st.write(example)
