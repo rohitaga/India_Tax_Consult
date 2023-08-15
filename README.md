@@ -1,7 +1,5 @@
 # India_Tax_Consult
-India_Tax_Consult app simplifies tax calculation for Indians
-
-Tax Insight App
+Tax Insight App app simplifies tax calculation for Indians
 
 Introduction
 
