@@ -1,7 +1,6 @@
 import streamlit as st
-import matplotlib.pyplot as plt
 from streamlit_option_menu import option_menu
-from pages import home, salaried, business_profession
+from pages import home, salaried, business_profession, senior_citizens, huf_tax # Include huf_tax
 
 # Set the page config with a custom icon
 st.set_page_config(page_title="TaxInsight", layout="wide", initial_sidebar_state="collapsed", page_icon="🔍")
@@ -21,13 +20,15 @@ selected = option_menu(
         "Home",
         "Salaried",
         "Business / Profession",
-        # ... (other menu options)
+        "Senior Citizens", # Existing option
+        "Hindu Undivided Family", # New option
     ],
     icons=[
         "house",
+        "wallet",
         "briefcase",
-        "briefcase",
-        # ... (other menu icons)
+        "building",
+        "briefcase", # New icon (you can choose another suitable icon)
     ],
     menu_icon="cast",
     default_index=0,
@@ -36,14 +37,18 @@ selected = option_menu(
 
 # Navigation
 if selected == "Home":
-    home.show()  # Assuming you have defined this function in the 'home' subfile
+    home.show()
 elif selected == "Salaried":
-    # Note for Users
     st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.')    
-    salaried.show()  # Using the imported 'show_salaried' function from 'salaried' module
+    salaried.show()
 elif selected == "Business / Profession":
-    # Note for Users
     st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.') 
-    business_profession.show()  # Using the imported 'show_business_profession' function from 'business_profession' module
+    business_profession.show()
+elif selected == "Senior Citizens": # Existing condition
+    st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.') 
+    senior_citizens.show()
+elif selected == "Hindu Undivided Family (HUF)": # New condition
+    st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.') 
+    huf_tax.show() # Using the imported 'show' function from 'huf_tax' module
 
 st.warning('Please note that this app is based on tax laws as of the 2023 fiscal year. Always consult with a tax professional to ensure compliance with the latest regulations.')
