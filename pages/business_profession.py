@@ -1,6 +1,9 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 
+def show():
+    business_profession()
+
 def business_profession():
     # Personal Information Section
     st.title('Tax Analysis App for Business/Profession')
@@ -26,9 +29,6 @@ def business_profession():
     st.header('Tax Paid')
     tds = st.number_input('TDS (Tax Deducted at Source)', value=0)
     advance_tax = st.number_input('Advance Tax', value=0)
-
-    # Note for Users
-    st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.')
 
     # Results Section
     st.header('Results')
