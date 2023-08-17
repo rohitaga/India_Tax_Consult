@@ -5,6 +5,8 @@ from pages import home, salaried, business_profession, senior_citizens, huf_tax 
 # Set the page config with a custom icon
 st.set_page_config(page_title="TaxInsight", layout="wide", initial_sidebar_state="collapsed", page_icon="🔍")
 
+st.sidebar.image('taxinsight_option_1.png', use_column_width="always", caption='TaxInsight')
+
 # Remove the Streamlit generated page components on the sidebar
 no_sidebar_style = """
     <style>
@@ -19,7 +21,7 @@ selected = option_menu(
     options=[
         "Home",
         "Salaried",
-        "Business / Profession",
+        "Business",
         "Senior Citizens", # Existing option
         "Hindu Undivided Family", # New option
     ],
@@ -41,7 +43,7 @@ if selected == "Home":
 elif selected == "Salaried":
     st.info('Note: You can switch between the Tax Calculator and Learning Manual sections using the sidebar navigation on the left.')    
     salaried.show()
-elif selected == "Business / Profession":
+elif selected == "Business":
     st.info('Note: You can switch between the Tax Calculator and Learning Manual sections using the sidebar navigation on the left.')    
     business_profession.show()
 elif selected == "Senior Citizens": # Existing condition

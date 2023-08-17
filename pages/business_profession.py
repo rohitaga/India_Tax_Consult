@@ -18,7 +18,7 @@ def business_profession():
 def main_app():
     # Personal Information Section
     st.info('Note: Default values have been provided for all fields. Please update them according to your financial details.')
-    st.title('Tax Analysis App for Business/Profession')
+    st.title('Tax Analysis App for Business')
     st.header('Personal Information')
     name = st.text_input('Full Name')
     age = st.number_input('Age', value=30)
@@ -142,8 +142,8 @@ def main_app():
             st.error('An unexpected error occurred. Please try again or contact support.')
 
 def description():
-    st.markdown("# Tax Insight App Tutorial for Business/Profession")
-    st.markdown("Welcome to the **Tax Insight Tutorial for Business/Profession**. This tutorial will guide you through using the app to understand how your tax is calculated, considering various factors such as business income, deductions, and tax payments.")
+    st.markdown("# Tax Insight App Tutorial for Business")
+    st.markdown("Welcome to the **Tax Insight Tutorial for Business**. This tutorial will guide you through using the app to understand how your tax is calculated, considering various factors such as business income, deductions, and tax payments.")
 
     with st.expander("Overview and Key Concepts"):
         st.markdown("- Applicable tax rates and rules for businesses and professionals.")
