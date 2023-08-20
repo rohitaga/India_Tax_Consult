@@ -3,7 +3,7 @@ from streamlit_option_menu import option_menu
 from pages import home, salaried, business_profession, senior_citizens, huf_tax # Include huf_tax
 
 # Set the page config with a custom icon
-st.set_page_config(page_title="TaxInsight", layout="wide", initial_sidebar_state="collapsed", page_icon="🔍")
+st.set_page_config(page_title="TaxInsight", layout="wide", initial_sidebar_state="expanded", page_icon="🔍")
 
 st.sidebar.image('taxinsight_option_1.png', use_column_width="always", caption='TaxInsight')
 
