@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from pages import home, salaried, business_profession, senior_citizens, huf_tax # Include huf_tax
+from pages import home, salaried, business_profession, senior_citizens
 
 # Set the page config with a custom icon
 st.set_page_config(page_title="TaxInsight", layout="wide", initial_sidebar_state="expanded", page_icon="🔍")
@@ -23,14 +23,12 @@ selected = option_menu(
         "Salaried",
         "Business",
         "Senior Citizens", # Existing option
-        "Hindu Undivided Family", # New option
     ],
     icons=[
         "house",
         "wallet",
         "briefcase",
         "building",
-        "briefcase", # New icon (you can choose another suitable icon)
     ],
     menu_icon="cast",
     default_index=0,
@@ -49,8 +47,5 @@ elif selected == "Business":
 elif selected == "Senior Citizens": # Existing condition
     st.info('Note: You can switch between the Tax Calculator and Learning Manual sections using the sidebar navigation on the left.')    
     senior_citizens.show()
-elif selected == "Hindu Undivided Family": # New condition
-    st.info('Note: You can switch between the Tax Calculator and Learning Manual sections using the sidebar navigation on the left.')    
-    huf_tax.show() # Using the imported 'show' function from 'huf_tax' module
 
 st.warning('Please note that this app is based on tax laws as of the 2023 fiscal year. Always consult with a tax professional to ensure compliance with the latest regulations.')
