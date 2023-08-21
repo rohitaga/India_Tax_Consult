@@ -1,6 +1,43 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 
+# Business Old Tax Regime
+@st.cache_data
+def old_tax_regime_business(taxable_income, age):
+    if age < 60:
+        slabs = [0, 250000, 500000, 1000000]
+        rates = [0.00, 0.05, 0.20, 0.30]
+    elif age < 80:
+        slabs = [0, 300000, 500000, 1000000]
+        rates = [0.00, 0.05, 0.20, 0.30]
+    else:
+        slabs = [0, 500000, 1000000]
+        rates = [0.00, 0.20, 0.30]
+    
+    slabs.append(float('inf'))  # Adding an upper bound to the slabs
+    tax = 0
+    for i in range(1, len(slabs)):
+        slab_diff = min(taxable_income, slabs[i]) - slabs[i - 1]
+        tax += slab_diff * rates[min(i - 1, len(rates) - 1)] # Using min to avoid index out of range
+        if taxable_income <= slabs[i]:
+            break
+    return tax
+
+# Business New Tax Regime
+@st.cache_data
+def new_tax_regime_business(taxable_income, age):
+    slabs = [0, 250000, 500000, 750000, 1000000, 1500000]
+    rates = [0.00, 0.05, 0.10, 0.15, 0.20, 0.30] if age < 60 else [0.00, 0.05, 0.10, 0.15, 0.30, 0.30]
+
+    slabs.append(float('inf'))  # Adding an upper bound to the slabs
+    tax = 0
+    for i in range(1, len(slabs)):
+        slab_diff = min(taxable_income, slabs[i]) - slabs[i - 1]
+        tax += slab_diff * rates[min(i - 1, len(rates) - 1)] # Using min to avoid index out of range
+        if taxable_income <= slabs[i]:
+            break
+    return tax
+
 @st.cache_data
 def calculate_tax(age, tax_regime, business_income, house_property_income, capital_gains, other_income, deduction_80c, deduction_80d, deduction_80g, tds, advance_tax):
 
@@ -19,47 +56,12 @@ def calculate_tax(age, tax_regime, business_income, house_property_income, capit
     # Handling Negative Taxable Income
     if taxable_income < 0:
         raise ValueError('Taxable income is negative after deductions.')
-
+    
     # Apply Tax Slabs
-    tax = 0
     if tax_regime == 'New Tax Regime':
-        if age < 60:
-            # New Tax Regime for Individuals less than 60 years
-            slab_amounts = [250000, 500000, 750000, 1000000, 1500000] 
-            tax_rates = [0.05, 0.10, 0.15, 0.20, 0.30]
-            for slab, rate in zip(slab_amounts, tax_rates):
-                tax += max(min(taxable_income, slab) - max(slab - 250000, 0), 0) * rate
-        elif age < 80:
-            # New Tax Regime for Individuals 60 to 79 years
-            slab_amounts = [300000, 500000, 1000000]
-            tax_rates = [0.05, 0.20, 0.30]
-            for slab, rate in zip(slab_amounts, tax_rates):
-                tax += max(min(taxable_income, slab) - max(slab - 300000, 0), 0) * rate
-        else:
-            # New Tax Regime for Individuals 80 years or more
-            slab_amounts = [500000, 1000000]
-            tax_rates = [0.20, 0.30]
-            for slab, rate in zip(slab_amounts, tax_rates):
-                tax += max(min(taxable_income, slab) - max(slab - 500000, 0), 0) * rate
+        tax = new_tax_regime_business(taxable_income, age)
     else:
-        if age < 60:
-            # Old Tax Regime for Individuals less than 60 years
-            slab_amounts = [250000, 500000, 1000000]
-            tax_rates = [0.05, 0.20, 0.30]
-            for slab, rate in zip(slab_amounts, tax_rates):
-                tax += max(min(taxable_income, slab) - max(slab - 250000, 0), 0) * rate
-        elif age < 80:
-            # Old Tax Regime for Individuals 60 to 79 years
-            slab_amounts = [300000, 500000, 1000000]
-            tax_rates = [0.05, 0.20, 0.30]
-            for slab, rate in zip(slab_amounts, tax_rates):
-                tax += max(min(taxable_income, slab) - max(slab - 300000, 0), 0) * rate
-        else:
-            # Old Tax Regime for Individuals 80 years or more
-            slab_amounts = [500000, 1000000]
-            tax_rates = [0.20, 0.30]
-            for slab, rate in zip(slab_amounts, tax_rates):
-                tax += max(min(taxable_income, slab) - max(slab - 500000, 0), 0) * rate
+        tax = old_tax_regime_business(taxable_income, age)
 
     # Add Cess (Health and Education Cess, 4% on income tax)
     tax += tax * 0.04
@@ -118,7 +120,7 @@ def main_app():
             net_tax_payable, total_income, total_deductions, taxable_income = calculate_tax(age, tax_regime, business_income, house_property_income, capital_gains, other_income, deduction_80c, deduction_80d, deduction_80g, tds, advance_tax)
 
             st.subheader('Tax Liability Summary')
-            st.write(f'Total Tax Payable: ₹{net_tax_payable}')
+            st.write(f'Total Tax Payable with 4% cess: ₹{net_tax_payable}')
 
             # Income Breakdown Visualization
             st.subheader('Income Breakdown')
@@ -170,3 +172,26 @@ def description():
             st.write(explanation)
             st.markdown("#### Example:")
             st.write(example)
+    
+    st.markdown("## Tax Slabs and Calculations")
+
+    st.markdown("### Business Tax Slabs (Old Regime)")
+    st.table({
+        "Range": ["₹0 to ₹250,000", "₹250,001 to ₹500,000", "₹500,001 to ₹1,000,000", "Above ₹1,000,000"],
+        "Rate": ["0%", "5%", "20%", "30%"]
+    })
+    st.write("Example Calculation for Taxable Income of ₹485,000:")
+    st.write("- ₹250,000 at 0% = ₹0\n- ₹235,000 at 5% = ₹11,750\n- Total Tax (Old Regime): ₹11,750")
+
+    st.markdown("### Business Tax Slabs (New Regime)")
+    st.table({
+        "Range": ["₹0 to ₹250,000", "₹250,001 to ₹500,000", "₹500,001 to ₹750,000", "₹750,001 to ₹1,000,000", "₹1,000,001 to ₹1,500,000"],
+        "Rate": ["0%", "5%", "10%", "15%", "30%"]
+    })
+    st.write("Example Calculation for Taxable Income of ₹485,000:")
+    st.write("- ₹250,000 at 0% = ₹0\n- ₹235,000 at 5% = ₹11,750\n- Total Tax (New Regime): ₹11,750")
+
+    st.markdown("### Health and Education Cess")
+    st.write("A 4% cess is added to the calculated tax.")
+    st.write("Example:")
+    st.write("- Total Tax (Old Regime): ₹11,750\n- Health and Education Cess: ₹470 (4% of ₹11,750)\n- Total Tax after Cess: ₹12,220")

@@ -93,7 +93,7 @@ def main_app():
             
             # Display the Result
             st.subheader('Tax Liability Summary')
-            st.write(f'Total Tax Payable: ₹{net_tax_payable}')
+            st.write(f'Total Tax Payable with 4% cess: ₹{net_tax_payable}')
 
             # Income Breakdown Visualization
             st.subheader('Income Breakdown')
